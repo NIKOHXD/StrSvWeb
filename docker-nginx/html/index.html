@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docker + nginx</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐳</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="card">
+    <h1>🐳 Ciao da Docker!</h1>
+    <p>Questa pagina è servita da <strong>nginx:alpine</strong> dentro un container.</p>
+
+    <!-- Plus: form di login (lato client, solo dimostrativo) -->
+    <section id="login-view">
+      <h2>Login</h2>
+      <form id="login-form">
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" autocomplete="username" required>
+
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+
+        <button type="submit">Accedi</button>
+        <p id="error" class="error" hidden>Credenziali errate.</p>
+      </form>
+      <p class="hint">Demo: utente <code>studente</code>, password <code>docker</code></p>
+    </section>
+
+    <section id="welcome-view" hidden>
+      <h2>Benvenuto, <span id="welcome-name"></span>!</h2>
+      <p>Ora sono le <span id="clock"></span>.</p>
+      <button id="logout">Esci</button>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
