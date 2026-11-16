@@ -1,0 +1,39 @@
+# SomeBankingApp dietro un reverse proxy nginx.
+# Le immagini usano i tag creati con "docker build -t" (vedi README.md);
+# se mancano, Compose le costruisce dalla cartella indicata in "build".
+
+services:
+  backend:
+    image: banking-backend:2.0
+    build: ./backend
+    expose:
+      - "8000"            # raggiungibile solo dalla rete interna
+    volumes:
+      - bank-data:/app/data
+    networks:
+      - bank-net
+
+  frontend:
+    image: banking-frontend:2.0
+    build: ./frontend
+    expose:
+      - "80"
+    networks:
+      - bank-net
+
+  proxy:
+    image: banking-proxy:2.0
+    build: ./proxy
+    ports:
+      - "80:80"           # unico servizio esposto all'host
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - bank-net
+
+networks:
+  bank-net:
+
+volumes:
+  bank-data:
