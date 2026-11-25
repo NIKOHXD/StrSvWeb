@@ -1,0 +1,39 @@
+// Pipeline: clona la repo personale e fa la build dei Dockerfile di FE e BE
+pipeline {
+    agent any
+
+    options {
+        skipDefaultCheckout()       // il clone lo facciamo in uno stage esplicito
+    }
+
+    environment {
+        TAG = "jenkins-${env.BUILD_NUMBER}"
+    }
+
+    stages {
+        stage('Clone') {
+            steps {
+                checkout scm
+                sh 'git log --oneline -1'
+            }
+        }
+
+        stage('Build backend') {
+            steps {
+                sh 'docker build -t banking-backend:$TAG SomeBankingApp/backend'
+            }
+        }
+
+        stage('Build frontend') {
+            steps {
+                sh 'docker build -t banking-frontend:$TAG SomeBankingApp/frontend'
+            }
+        }
+
+        stage('Verifica') {
+            steps {
+                sh 'docker images | grep banking'
+            }
+        }
+    }
+}
